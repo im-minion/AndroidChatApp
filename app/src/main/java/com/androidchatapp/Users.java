@@ -32,13 +32,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Users extends AppCompatActivity {
     ListView usersList;
     TextView noUsersText;
     ArrayList<String> al;
-    int totalUsers = 0;
     private Button signout;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -55,21 +55,15 @@ public class Users extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
+                if (user == null) {
                     Intent intent = new Intent(Users.this, Login.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);                    // User is signed out
-                    //Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
 
         userRef = FirebaseDatabase.getInstance().getReference("/users");
-
 
         usersList = (ListView) findViewById(R.id.usersList);
         noUsersText = (TextView) findViewById(R.id.noUsersText);
@@ -77,38 +71,20 @@ public class Users extends AppCompatActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
         pd.show();
-
+        UserDetails.username = mAuth.getCurrentUser().getUid();
         //String url = "https://rtchat-6d4d7.firebaseio.com/users.json";
-        String url = "https://androidchatapp-5321f.firebaseio.com/users.json";
-//
-//
-//        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String s) {
-//                Log.w("MYTAG2 : ", "" + s);
-//                doOnSuccess(s);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                System.out.println("" + volleyError);
-//            }
-//        });
-//
-//        RequestQueue rQueue = Volley.newRequestQueue(Users.this);
-//        rQueue.add(request);
-
+        //String url = "https://androidchatapp-5321f.firebaseio.com/users.json";
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 al = new ArrayList<>();
-                Log.w("MYTAG2 : ", "" + dataSnapshot.getChildrenCount());
-//                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
+                //                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Log.i("MyTag", child.getValue().toString());
-                    al.add(String.valueOf(child.getValue()));
+                    if (!child.getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                        al.add(String.valueOf(child.getValue()));
+                    }
                 }
-                if (dataSnapshot.getChildrenCount() <= 1) {
+                if (al.isEmpty()) {
                     noUsersText.setVisibility(View.VISIBLE);
                     usersList.setVisibility(View.GONE);
                 } else {
@@ -116,7 +92,6 @@ public class Users extends AppCompatActivity {
                     usersList.setVisibility(View.VISIBLE);
                     usersList.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_list, al));
                 }
-                Log.i("vbhg", "" + al);
                 pd.dismiss();
             }
 
@@ -129,7 +104,7 @@ public class Users extends AppCompatActivity {
         usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserDetails.chatWith = al.get(position);
+                UserDetails.chatWith ="vaibhav";
                 startActivity(new Intent(Users.this, Chat.class));
             }
         });
@@ -155,38 +130,4 @@ public class Users extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-//    public void doOnSuccess(String s) {
-//        try {
-//            JSONObject obj = new JSONObject(s);
-//
-//            Iterator i = obj.keys();
-//            String key = "";
-//
-//            while (i.hasNext()) {
-//                key = i.next().toString();
-//
-//                if (!key.equals(UserDetails.username)) {
-//                    al.add(key);
-//                }
-//                Log.w("MYTAG : ", "" + al);
-//
-//                totalUsers++;
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (totalUsers <= 1) {
-//            noUsersText.setVisibility(View.VISIBLE);
-//            usersList.setVisibility(View.GONE);
-//        } else {
-//            noUsersText.setVisibility(View.GONE);
-//            usersList.setVisibility(View.VISIBLE);
-//            usersList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al));
-//        }
-//
-//        pd.dismiss();
-//    }
 }

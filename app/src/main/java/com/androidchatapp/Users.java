@@ -37,7 +37,7 @@ import java.util.Iterator;
 public class Users extends AppCompatActivity {
     ListView usersList;
     TextView noUsersText;
-    ArrayList<String> al = new ArrayList<>();
+    ArrayList<String> al;
     int totalUsers = 0;
     private Button signout;
     private FirebaseAuth mAuth;
@@ -101,11 +101,12 @@ public class Users extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                al = new ArrayList<>();
                 Log.w("MYTAG2 : ", "" + dataSnapshot.getChildrenCount());
-                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
+//                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Log.i("MyTag", child.getValue().toString());
-                   al.add(String.valueOf(child.getValue()));
+                    al.add(String.valueOf(child.getValue()));
                 }
                 if (dataSnapshot.getChildrenCount() <= 1) {
                     noUsersText.setVisibility(View.VISIBLE);
@@ -113,9 +114,9 @@ public class Users extends AppCompatActivity {
                 } else {
                     noUsersText.setVisibility(View.GONE);
                     usersList.setVisibility(View.VISIBLE);
-                    usersList.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, al));
+                    usersList.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_list, al));
                 }
-                Log.i("vbhg", ""+al);
+                Log.i("vbhg", "" + al);
                 pd.dismiss();
             }
 
@@ -155,37 +156,37 @@ public class Users extends AppCompatActivity {
         }
     }
 
-    public void doOnSuccess(String s) {
-        try {
-            JSONObject obj = new JSONObject(s);
-
-            Iterator i = obj.keys();
-            String key = "";
-
-            while (i.hasNext()) {
-                key = i.next().toString();
-
-                if (!key.equals(UserDetails.username)) {
-                    al.add(key);
-                }
-                Log.w("MYTAG : ", "" + al);
-
-                totalUsers++;
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (totalUsers <= 1) {
-            noUsersText.setVisibility(View.VISIBLE);
-            usersList.setVisibility(View.GONE);
-        } else {
-            noUsersText.setVisibility(View.GONE);
-            usersList.setVisibility(View.VISIBLE);
-            usersList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al));
-        }
-
-        pd.dismiss();
-    }
+//    public void doOnSuccess(String s) {
+//        try {
+//            JSONObject obj = new JSONObject(s);
+//
+//            Iterator i = obj.keys();
+//            String key = "";
+//
+//            while (i.hasNext()) {
+//                key = i.next().toString();
+//
+//                if (!key.equals(UserDetails.username)) {
+//                    al.add(key);
+//                }
+//                Log.w("MYTAG : ", "" + al);
+//
+//                totalUsers++;
+//            }
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (totalUsers <= 1) {
+//            noUsersText.setVisibility(View.VISIBLE);
+//            usersList.setVisibility(View.GONE);
+//        } else {
+//            noUsersText.setVisibility(View.GONE);
+//            usersList.setVisibility(View.VISIBLE);
+//            usersList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al));
+//        }
+//
+//        pd.dismiss();
+//    }
 }

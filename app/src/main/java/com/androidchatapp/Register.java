@@ -68,7 +68,7 @@ public class Register extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(Register.this, "FAILED", Toast.LENGTH_SHORT).show();
                         } else {
-                            userRef.child(String.valueOf(FirebaseAuth.getInstance().getCurrentUser())).setValue("ok");
+                            userRef.push().setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             Intent intent = new Intent(Register.this, Login.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);

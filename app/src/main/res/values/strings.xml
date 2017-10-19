@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android Chat App</string>
+    <string name="signout">SignOut</string>
 </resources>

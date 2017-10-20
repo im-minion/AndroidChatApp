@@ -59,6 +59,8 @@ public class Users extends AppCompatActivity {
                     Intent intent = new Intent(Users.this, Login.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);                    // User is signed out
+                } else {
+                    UserDetails.username = user.getUid();
                 }
             }
         };
@@ -71,7 +73,7 @@ public class Users extends AppCompatActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
         pd.show();
-        UserDetails.username = mAuth.getCurrentUser().getUid();
+
         //String url = "https://rtchat-6d4d7.firebaseio.com/users.json";
         //String url = "https://androidchatapp-5321f.firebaseio.com/users.json";
         userRef.addValueEventListener(new ValueEventListener() {
@@ -80,8 +82,10 @@ public class Users extends AppCompatActivity {
                 al = new ArrayList<>();
                 //                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    //Log.w("checkcheck", child.getKey());
                     if (!child.getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                         al.add(String.valueOf(child.getValue()));
+
                     }
                 }
                 if (al.isEmpty()) {
@@ -104,7 +108,24 @@ public class Users extends AppCompatActivity {
         usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserDetails.chatWith ="vaibhav";
+                final String checkChild = al.get(position);
+                userRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            //Log.w("checkcheck", child.getKey());
+                            if (child.getValue().equals(checkChild)) {
+                                UserDetails.chatWith = child.getKey();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                UserDetails.chatWith = al.get(position);
                 startActivity(new Intent(Users.this, Chat.class));
             }
         });

@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,10 +69,13 @@ public class Register extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(Register.this, "FAILED", Toast.LENGTH_SHORT).show();
                         } else {
-                            userRef.push().setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                            Intent intent = new Intent(Register.this, Login.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                            FirebaseUser tempUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if (tempUser != null) {
+                                userRef.child(tempUser.getUid()).setValue(tempUser.getEmail());
+                                Intent intent = new Intent(Register.this, Login.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
                         }
                     }
                 });

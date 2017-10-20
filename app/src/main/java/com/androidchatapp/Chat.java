@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,11 +48,11 @@ public class Chat extends AppCompatActivity {
 //        Firebase.setAndroidContext(this);
 //        reference1 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
 //        reference2 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
-
+        //Toast.makeText(Chat.this, "chat with : " + UserDetails.chatWith + "u are : " + UserDetails.username, Toast.LENGTH_LONG).show();
 
         String usertowith, withtouser;
-        usertowith = UserDetails.username + "TO" + UserDetails.chatWith;
-        withtouser = UserDetails.chatWith + "TO" + UserDetails.username;
+        usertowith = UserDetails.username + "_" + UserDetails.chatWith;
+        withtouser = UserDetails.chatWith + "_" + UserDetails.username;
         //Toast.makeText(Chat.this, usertowith, Toast.LENGTH_LONG).show();
         chatRef1 = messageRef.child(usertowith);
         chatRef2 = messageRef.child(withtouser);
@@ -81,7 +82,7 @@ public class Chat extends AppCompatActivity {
                 Toast.makeText(Chat.this, "" + dataSnapshot.child("message").getValue(), Toast.LENGTH_LONG).show();
                 String message = String.valueOf(dataSnapshot.child("message").getValue());
                 String userName = String.valueOf(dataSnapshot.child("user").getValue());
-//String message = map.get("message").toString();
+//                String message = map.get("message").toString();
 //                String userName = map.get("user").toString();
 
                 if (userName.equals(UserDetails.username)) {

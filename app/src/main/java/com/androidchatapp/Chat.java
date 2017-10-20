@@ -79,7 +79,7 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //  Object map = dataSnapshot.getValue();
-                Toast.makeText(Chat.this, "" + dataSnapshot.child("message").getValue(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(Chat.this, "" + dataSnapshot.child("message").getValue(), Toast.LENGTH_LONG).show();
                 String message = String.valueOf(dataSnapshot.child("message").getValue());
                 String userName = String.valueOf(dataSnapshot.child("user").getValue());
 //                String message = map.get("message").toString();
@@ -122,10 +122,10 @@ public class Chat extends AppCompatActivity {
         lp2.weight = 1.0f;
 
         if (type == 1) {
-            lp2.gravity = Gravity.LEFT;
+            lp2.gravity = Gravity.RIGHT;
             textView.setBackgroundResource(R.drawable.bubble_in);
         } else {
-            lp2.gravity = Gravity.RIGHT;
+            lp2.gravity = Gravity.LEFT;
             textView.setBackgroundResource(R.drawable.bubble_out);
         }
         textView.setLayoutParams(lp2);

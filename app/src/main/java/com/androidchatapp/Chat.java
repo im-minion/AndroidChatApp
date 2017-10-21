@@ -31,7 +31,7 @@ public class Chat extends AppCompatActivity {
     EditText messageArea;
     ScrollView scrollView;
     //Firebase reference1, reference2;
-    DatabaseReference messageRef, chatRef1, chatRef2;
+    DatabaseReference messageRef, chatRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,37 @@ public class Chat extends AppCompatActivity {
 //        reference2 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
         //Toast.makeText(Chat.this, "chat with : " + UserDetails.chatWith + "u are : " + UserDetails.username, Toast.LENGTH_LONG).show();
 
-        String usertowith, withtouser;
-        usertowith = UserDetails.username + "_" + UserDetails.chatWith;
-        withtouser = UserDetails.chatWith + "_" + UserDetails.username;
+        final String type1, type2;
+        type1 = UserDetails.username + "_" + UserDetails.chatWith;
+        type2 = UserDetails.chatWith + "_" + UserDetails.username;
         //Toast.makeText(Chat.this, usertowith, Toast.LENGTH_LONG).show();
-        chatRef1 = messageRef.child(usertowith);
-        chatRef2 = messageRef.child(withtouser);
+        messageRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(type1)) {
+                    UserDetails.userType = "type1";
+                } else if (dataSnapshot.hasChild(type2)) {
+                    UserDetails.userType = "type2";
+                } else {
+                    UserDetails.userType = "type1";
+                    dataSnapshot.child(type1);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        if (UserDetails.userType.equals("type1")) {
+            //type 1 child already exists :)
+            chatRef = messageRef.child(type1);
+        } else {
+            //type 2 child already exixts :)
+            chatRef = messageRef.child(type2);
+        }
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +91,8 @@ public class Chat extends AppCompatActivity {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
                     map.put("user", UserDetails.username);
-                    chatRef1.push().setValue(map);
-                    chatRef2.push().setValue(map);
+                    chatRef.push().setValue(map);
+//                    chatRef2.push().setValue(map);
 //                    reference1.push().setValue(map);
 //                    reference2.push().setValue(map);
                     messageArea.setText("");
@@ -75,7 +100,7 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-        chatRef1.addChildEventListener(new ChildEventListener() {
+        chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //  Object map = dataSnapshot.getValue();

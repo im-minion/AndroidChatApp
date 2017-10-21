@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
 
         EasySplashScreen config = new EasySplashScreen(SplashScreen.this);
         config.withFullScreen();
-        config.withTargetActivity(Login.class);
+        config.withTargetActivity(Users.class);
         config.withSplashTimeOut(5000);
         config.withBackgroundColor(Color.parseColor("#f43d3c"));
         config.withLogo(splash_logo);

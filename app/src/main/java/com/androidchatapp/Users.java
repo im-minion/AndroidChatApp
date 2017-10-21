@@ -66,19 +66,16 @@ public class Users extends AppCompatActivity {
         };
 
         userRef = FirebaseDatabase.getInstance().getReference("/users");
-
         usersList = (ListView) findViewById(R.id.usersList);
         noUsersText = (TextView) findViewById(R.id.noUsersText);
-
         pd = new ProgressDialog(this);
-        pd.setMessage("Loading...");
-        pd.show();
-
         //String url = "https://rtchat-6d4d7.firebaseio.com/users.json";
         //String url = "https://androidchatapp-5321f.firebaseio.com/users.json";
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                pd.setMessage("Loading...");
+                pd.show();
                 al = new ArrayList<>();
                 //                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
@@ -101,7 +98,6 @@ public class Users extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                pd.dismiss();
             }
         });
 

@@ -45,7 +45,6 @@ public class Chat extends AppCompatActivity {
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         messageRef = FirebaseDatabase.getInstance().getReference("/messages");
-//        Firebase.setAndroidContext(this);
 //        reference1 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
 //        reference2 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
         //Toast.makeText(Chat.this, "chat with : " + UserDetails.chatWith + "u are : " + UserDetails.username, Toast.LENGTH_LONG).show();

@@ -51,7 +51,8 @@ public class Users extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);                    // User is signed out
                 } else {
-                    UserDetails.username = user.getUid();
+                    UserDetails.userID = user.getUid();
+                    UserDetails.userEmail = user.getEmail();
                 }
             }
         };
@@ -95,13 +96,14 @@ public class Users extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String checkChild = al.get(position);
+                UserDetails.chatwithEmail = checkChild;
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
                             //Log.w("checkcheck", child.getKey());
                             if (child.getValue().equals(checkChild)) {
-                                UserDetails.chatWith = child.getKey();
+                                UserDetails.chatwithID = child.getKey();
                             }
                         }
                     }
@@ -111,7 +113,7 @@ public class Users extends AppCompatActivity {
 
                     }
                 });
-                UserDetails.chatWith = al.get(position);
+                UserDetails.chatwithID = al.get(position);
                 startActivity(new Intent(Users.this, Chat.class));
             }
         });

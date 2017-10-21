@@ -29,7 +29,6 @@ public class Chat extends AppCompatActivity {
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
-    //Firebase reference1, reference2;
     DatabaseReference messageRef, chatRef;
 
     @Override
@@ -44,14 +43,11 @@ public class Chat extends AppCompatActivity {
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         messageRef = FirebaseDatabase.getInstance().getReference("/messages");
-//        reference1 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
-//        reference2 = new Firebase("https://rtchat-6d4d7.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
-        //Toast.makeText(Chat.this, "chat with : " + UserDetails.chatWith + "u are : " + UserDetails.username, Toast.LENGTH_LONG).show();
 
         final String type1, type2;
-        type1 = UserDetails.username + "_" + UserDetails.chatWith;
-        type2 = UserDetails.chatWith + "_" + UserDetails.username;
-        //Toast.makeText(Chat.this, usertowith, Toast.LENGTH_LONG).show();
+        type1 = UserDetails.userID + "_" + UserDetails.chatwithID;
+        type2 = UserDetails.chatwithID + "_" + UserDetails.userID;
+
         messageRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,11 +84,8 @@ public class Chat extends AppCompatActivity {
                 if (!messageText.equals("")) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
-                    map.put("user", UserDetails.username);
+                    map.put("user", UserDetails.userID);
                     chatRef.push().setValue(map);
-//                    chatRef2.push().setValue(map);
-//                    reference1.push().setValue(map);
-//                    reference2.push().setValue(map);
                     messageArea.setText("");
                 }
             }
@@ -101,17 +94,13 @@ public class Chat extends AppCompatActivity {
         chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //  Object map = dataSnapshot.getValue();
-//                Toast.makeText(Chat.this, "" + dataSnapshot.child("message").getValue(), Toast.LENGTH_LONG).show();
+
                 String message = String.valueOf(dataSnapshot.child("message").getValue());
                 String userName = String.valueOf(dataSnapshot.child("user").getValue());
-//                String message = map.get("message").toString();
-//                String userName = map.get("user").toString();
-
-                if (userName.equals(UserDetails.username)) {
+                if (userName.equals(UserDetails.userID)) {
                     addMessageBox("You:-\n" + message, 1);
                 } else {
-                    addMessageBox(UserDetails.chatWith + ":-\n" + message, 2);
+                    addMessageBox(UserDetails.chatwithEmail + ":-\n" + message, 2);
                 }
             }
 

@@ -50,12 +50,16 @@ public class Users extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         signout = (Button) findViewById(R.id.sign_out);
+        pd = new ProgressDialog(this);
+        pd.setMessage("Loading...");
+        pd.show();
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
+                    pd.dismiss();
                     Intent intent = new Intent(Users.this, Login.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);                    // User is signed out
@@ -68,14 +72,13 @@ public class Users extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference("/users");
         usersList = (ListView) findViewById(R.id.usersList);
         noUsersText = (TextView) findViewById(R.id.noUsersText);
-        pd = new ProgressDialog(this);
+
         //String url = "https://rtchat-6d4d7.firebaseio.com/users.json";
         //String url = "https://androidchatapp-5321f.firebaseio.com/users.json";
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                pd.setMessage("Loading...");
-                pd.show();
+
                 al = new ArrayList<>();
                 //                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {

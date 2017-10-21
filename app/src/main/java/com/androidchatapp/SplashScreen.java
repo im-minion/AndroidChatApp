@@ -1,14 +1,13 @@
 package com.androidchatapp;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
 import gr.net.maroulis.library.EasySplashScreen;
 
-import static com.androidchatapp.R.drawable.splash;
 import static com.androidchatapp.R.drawable.splash_logo;
 
 

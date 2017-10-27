@@ -51,12 +51,16 @@ public class Chat extends AppCompatActivity {
         messageRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(type1)) {
+                DataSnapshot child1 = dataSnapshot.child(type1);
+                DataSnapshot child2 = dataSnapshot.child(type2);
+                if (child1.exists()) {
                     UserDetails.userType = "type1";
-                } else if (dataSnapshot.hasChild(type2)) {
+                    chatRef = messageRef.child(type1);
+                } else if (child2.exists()) {
                     UserDetails.userType = "type2";
                 } else {
                     UserDetails.userType = "type1";
+                    chatRef = messageRef.child(type2);
                     dataSnapshot.child(type1);
                 }
             }
@@ -134,10 +138,10 @@ public class Chat extends AppCompatActivity {
         lp2.weight = 1.0f;
 
         if (type == 1) {
-            lp2.gravity = Gravity.RIGHT;
+            lp2.gravity = Gravity.END;
             textView.setBackgroundResource(R.drawable.bubble_in);
         } else {
-            lp2.gravity = Gravity.LEFT;
+            lp2.gravity = Gravity.START;
             textView.setBackgroundResource(R.drawable.bubble_out);
         }
         textView.setLayoutParams(lp2);

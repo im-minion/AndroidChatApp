@@ -27,7 +27,7 @@ public class SplashScreen extends AppCompatActivity {
         config.withBackgroundColor(Color.parseColor("#f43d3c"));
         config.withLogo(splash_logo);
         config.withHeaderText("");
-        config.withFooterText("Made by Roll No. 61,70");
+        config.withFooterText("");
         config.withBeforeLogoText("");
         config.withAfterLogoText("Chatly");
 

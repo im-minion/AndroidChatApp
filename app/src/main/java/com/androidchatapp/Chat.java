@@ -55,12 +55,12 @@ public class Chat extends AppCompatActivity {
                 DataSnapshot child2 = dataSnapshot.child(type2);
                 if (child1.exists()) {
                     UserDetails.userType = "type1";
-                    chatRef = messageRef.child(type1);
+                    //chatRef2 = messageRef.child(type1);
                 } else if (child2.exists()) {
                     UserDetails.userType = "type2";
                 } else {
                     UserDetails.userType = "type1";
-                    chatRef = messageRef.child(type2);
+                    //chatRef2 = messageRef.child(type2);
                     dataSnapshot.child(type1);
                 }
             }

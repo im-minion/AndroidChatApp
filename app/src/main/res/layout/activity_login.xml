@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Login"
-        android:textSize="30dp"
+        android:text="@string/login"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <EditText
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="username"
+        android:hint="@string/email"
         android:inputType="text"
         android:maxLines="1" />
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:maxLines="1" />
 
@@ -51,14 +51,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Login" />
+        android:background="@android:color/holo_red_light"
+        android:text="@string/login"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="No account yet? Create one" />
-
-
+        android:text="@string/no_account_yet_create_one"
+        android:textSize="18sp" />
 </LinearLayout>

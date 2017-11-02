@@ -14,7 +14,7 @@
         android:id="@+id/noUsersText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No users found!"
+        android:text="@string/no_users_found"
         android:visibility="gone" />
 
     <ListView

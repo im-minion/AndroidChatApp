@@ -26,8 +26,6 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog pd;
 
-    //private FirebaseAuth.AuthStateListener mAuthListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +35,8 @@ public class Register extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         Button registerButton = (Button) findViewById(R.id.registerButton);
         TextView login = (TextView) findViewById(R.id.login);
-
         pd = new ProgressDialog(this);
-
-
         mAuth = FirebaseAuth.getInstance();
-        //Firebase.setAndroidContext(this);
         final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("/users");
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +51,6 @@ public class Register extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 user = username.getText().toString();
                 pass = password.getText().toString();
                 if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass)) {

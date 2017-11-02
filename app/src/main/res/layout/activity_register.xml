@@ -14,10 +14,10 @@
     tools:context="com.androidchatapp.Register">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView"
         android:layout_width="185dp"
         android:layout_height="166dp"
-        android:layout_weight="0.13"
+        android:gravity="center"
         app:srcCompat="@drawable/logo" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="username"
+        android:hint="@string/email"
         android:inputType="text"
         android:maxLines="1" />
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:maxLines="1" />
 
@@ -52,14 +52,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Register" />
-
+        android:background="@android:color/holo_red_light"
+        android:text="@string/register"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="have account? sign in" />
+        android:text="@string/have_account_sign_in"
+        android:textSize="18sp" />
 
 </LinearLayout>

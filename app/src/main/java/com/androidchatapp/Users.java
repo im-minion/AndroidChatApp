@@ -26,7 +26,6 @@ public class Users extends AppCompatActivity {
     ListView usersList;
     TextView noUsersText;
     ArrayList<String> al;
-    private Button signout;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference userRef;
@@ -36,7 +35,7 @@ public class Users extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
-        signout = (Button) findViewById(R.id.sign_out);
+        Button signout = (Button) findViewById(R.id.sign_out);
         pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
         pd.show();
@@ -60,17 +59,13 @@ public class Users extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference("/users");
         usersList = (ListView) findViewById(R.id.usersList);
         noUsersText = (TextView) findViewById(R.id.noUsersText);
-
-        //String url = "https://rtchat-6d4d7.firebaseio.com/users.json";
-        //String url = "https://androidchatapp-5321f.firebaseio.com/users.json";
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 al = new ArrayList<>();
-                //                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
+//                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    //Log.w("checkcheck", child.getKey());
                     if (!child.getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                         al.add(String.valueOf(child.getValue()));
 

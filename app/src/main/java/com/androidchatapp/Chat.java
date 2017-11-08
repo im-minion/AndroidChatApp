@@ -2,6 +2,7 @@ package com.androidchatapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,8 @@ public class Chat extends AppCompatActivity {
     ScrollView scrollView;
     DatabaseReference messageRef, chatRef;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,9 @@ public class Chat extends AppCompatActivity {
         sendButton = (ImageView) findViewById(R.id.sendButton);
         messageArea = (EditText) findViewById(R.id.messageArea);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        toolbar = (Toolbar) findViewById(R.id.chat_with_toolbar);
+        toolbar.setTitle(UserDetails.chatwithEmail);
 
         messageRef = FirebaseDatabase.getInstance().getReference("/messages");
 

@@ -108,7 +108,7 @@ public class Users extends AppCompatActivity {
 
                     }
                 });
-                UserDetails.chatwithID = al.get(position);
+                //UserDetails.chatwithID = al.get(position);
                 startActivity(new Intent(Users.this, Chat.class));
             }
         });

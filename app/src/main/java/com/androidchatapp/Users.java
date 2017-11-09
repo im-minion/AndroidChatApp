@@ -92,22 +92,23 @@ public class Users extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String checkChild = al.get(position);
                 UserDetails.chatwithEmail = checkChild;
-                userRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            //Log.w("checkcheck", child.getKey());
-                            if (child.getValue().equals(checkChild)) {
-                                UserDetails.chatwithID = child.getKey();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                Utils.valueEventListener(userRef,checkChild);
+//                userRef.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                            //Log.w("checkcheck", child.getKey());
+//                            if (child.getValue().equals(checkChild)) {
+//                                UserDetails.chatwithID = child.getKey();
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
                 //UserDetails.chatwithID = al.get(position);
                 startActivity(new Intent(Users.this, Chat.class));
             }

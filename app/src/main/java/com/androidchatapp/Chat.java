@@ -33,6 +33,7 @@ public class Chat extends AppCompatActivity {
     ScrollView scrollView;
     DatabaseReference messageRef, chatRef;
 
+    Boolean chk = false;
     Toolbar toolbar;
 
     @Override
@@ -54,37 +55,47 @@ public class Chat extends AppCompatActivity {
         final String type1, type2;
         type1 = UserDetails.userID + "_" + UserDetails.chatwithID;
         type2 = UserDetails.chatwithID + "_" + UserDetails.userID;
+        if (!chk) {
 
-        messageRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot child1 = dataSnapshot.child(type1);
-                DataSnapshot child2 = dataSnapshot.child(type2);
-                if (child1.exists()) {
-                    UserDetails.userType = "type1";
-                    //chatRef2 = messageRef.child(type1);
-                } else if (child2.exists()) {
-                    UserDetails.userType = "type2";
-                } else {
-                    UserDetails.userType = "type1";
-                    //chatRef2 = messageRef.child(type2);
-                    dataSnapshot.child(type1);
+            messageRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    DataSnapshot child1 = dataSnapshot.child(type1);
+                    DataSnapshot child2 = dataSnapshot.child(type2);
+                    if (child1.exists()) {
+                        UserDetails.userType = "type1";
+                        chatRef = messageRef.child(type1);
+                        fucking(chatRef);
+                        //chatRef2 = messageRef.child(type1);
+                    } else if (child2.exists()) {
+                        UserDetails.userType = "type2";
+                        chatRef = messageRef.child(type2);
+                        fucking(chatRef);
+                    } else {
+                        UserDetails.userType = "none";
+                        messageRef.child(type1).setValue("notyet");
+                        chatRef = messageRef.child(type1);
+                        UserDetails.userType = "type1";
+                        fucking(chatRef);
+                        //chatRef2 = messageRef.child(type2);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-        if (UserDetails.userType.equals("type1")) {
-            //type 1 child already exists :)
-            chatRef = messageRef.child(type1);
-        } else {
-            //type 2 child already exixts :)
-            chatRef = messageRef.child(type2);
+                }
+            });
+            chk = true;
         }
+
+//        if (UserDetails.userType.equals("type1")) {
+//            //type 1 child already exists :)
+//            chatRef = messageRef.child(type1);
+//        } else {
+//            //type 2 child already exixts :)
+//            chatRef = messageRef.child(type2);
+//        }
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +112,21 @@ public class Chat extends AppCompatActivity {
                 }
             }
         });
+//        if (chk) {
+//            fucking(chatRef);
+//        }
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        UserDetails.chatwithID = "";
+        UserDetails.userType = "";
+        chk = false;
+    }
+
+    private void fucking(DatabaseReference chatRef) {
+        //chk = true;
         chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

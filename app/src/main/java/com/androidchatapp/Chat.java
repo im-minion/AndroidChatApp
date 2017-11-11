@@ -19,7 +19,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class Chat extends AppCompatActivity {
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
-    DatabaseReference messageRef, chatRef;
+    DatabaseReference messageRef;
 
     Toolbar toolbar;
 
@@ -48,6 +47,10 @@ public class Chat extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.chat_with_toolbar);
         toolbar.setTitle(UserDetails.chatwithEmail);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         /**
          * 1. create messageRef to get till the message child
@@ -168,5 +171,11 @@ public class Chat extends AppCompatActivity {
         textView.setLayoutParams(lp2);
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Utils.intentWithClear(Chat.this, Users.class);
+        return true;
     }
 }

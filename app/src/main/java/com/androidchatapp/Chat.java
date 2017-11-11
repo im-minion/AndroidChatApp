@@ -49,42 +49,55 @@ public class Chat extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.chat_with_toolbar);
         toolbar.setTitle(UserDetails.chatwithEmail);
 
+        /**
+         * 1. create messageRef to get till the message child
+         * 2. from messageRef get chatRef as follows
+         * >>>>>>if message ref contains child of type 1 then store chatref as the value of child type1
+         * >>>>>>else if message ref contains child of type 2 then store chatref as the value of child type2
+         * >>>>>>else set the chatRef to null
+         * 3. send button on click listener take chatRef and inside it into push child setvalue of "map" defined below
+         * 4. add the message
+         *
+         * chat ref globally asscebile
+         * **/
+
+
         messageRef = FirebaseDatabase.getInstance().getReference("/messages");
 
-        final String type1, type2;
-        type1 = UserDetails.userID + "_" + UserDetails.chatwithID;
-        type2 = UserDetails.chatwithID + "_" + UserDetails.userID;
+//        final String type1, type2;
+//        type1 = UserDetails.userID + "_" + UserDetails.chatwithID;
+//        type2 = UserDetails.chatwithID + "_" + UserDetails.userID;
 
-        messageRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot child1 = dataSnapshot.child(type1);
-                DataSnapshot child2 = dataSnapshot.child(type2);
-                if (child1.exists()) {
-                    UserDetails.userType = "type1";
-                    //chatRef2 = messageRef.child(type1);
-                } else if (child2.exists()) {
-                    UserDetails.userType = "type2";
-                } else {
-                    UserDetails.userType = "type1";
-                    //chatRef2 = messageRef.child(type2);
-                    dataSnapshot.child(type1);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        if (UserDetails.userType.equals("type1")) {
-            //type 1 child already exists :)
-            chatRef = messageRef.child(type1);
-        } else {
-            //type 2 child already exixts :)
-            chatRef = messageRef.child(type2);
-        }
+//        messageRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                DataSnapshot child1 = dataSnapshot.child(type1);
+//                DataSnapshot child2 = dataSnapshot.child(type2);
+//                if (child1.exists()) {
+//                    UserDetails.userType = "type1";
+//                    //chatRef2 = messageRef.child(type1);
+//                } else if (child2.exists()) {
+//                    UserDetails.userType = "type2";
+//                } else {
+//                    UserDetails.userType = "type1";
+//                    //chatRef2 = messageRef.child(type2);
+//                    dataSnapshot.child(type1);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        if (UserDetails.userType.equals("type1")) {
+//            //type 1 child already exists :)
+//            chatRef = messageRef.child(type1);
+//        } else {
+//            //type 2 child already exixts :)
+//            chatRef = messageRef.child(type2);
+//        }
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -96,45 +109,46 @@ public class Chat extends AppCompatActivity {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
                     map.put("user", UserDetails.userID);
-                    chatRef.push().setValue(map);
+                    UserDetails.chatRef.push().setValue(map);
                     messageArea.setText("");
                 }
             }
         });
+        if (UserDetails.chatRef != null) {
+            UserDetails.chatRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-        chatRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                String message = String.valueOf(dataSnapshot.child("message").getValue());
-                String userName = String.valueOf(dataSnapshot.child("user").getValue());
-                if (userName.equals(UserDetails.userID)) {
-                    addMessageBox("You:-\n" + message, 1);
-                } else {
-                    addMessageBox(UserDetails.chatwithEmail + ":-\n" + message, 2);
+                    String message = String.valueOf(dataSnapshot.child("message").getValue());
+                    String userName = String.valueOf(dataSnapshot.child("user").getValue());
+                    if (userName.equals(UserDetails.userID)) {
+                        addMessageBox("You:-\n" + message, 1);
+                    } else {
+                        addMessageBox(UserDetails.chatwithEmail + ":-\n" + message, 2);
+                    }
                 }
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-            }
+                }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
+                }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     public void addMessageBox(String message, int type) {

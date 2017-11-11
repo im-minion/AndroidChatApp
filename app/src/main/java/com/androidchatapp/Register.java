@@ -66,7 +66,7 @@ public class Register extends AppCompatActivity {
                                 FirebaseUser tempUser = FirebaseAuth.getInstance().getCurrentUser();
                                 if (tempUser != null) {
                                     userRef.child(tempUser.getUid()).setValue(tempUser.getEmail());
-                                    Utils.intentWithClear(Register.this, Login.class);
+                                    Utils.intentWithClear(Register.this, Users.class);
                                 }
                             }
                         }

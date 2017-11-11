@@ -1,5 +1,6 @@
 package com.androidchatapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -46,8 +47,9 @@ public class Chat extends AppCompatActivity {
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         toolbar = (Toolbar) findViewById(R.id.chat_with_toolbar);
-        toolbar.setTitle(UserDetails.chatwithEmail);
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(UserDetails.chatwithEmail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -60,49 +62,10 @@ public class Chat extends AppCompatActivity {
          * >>>>>>else set the chatRef to null
          * 3. send button on click listener take chatRef and inside it into push child setvalue of "map" defined below
          * 4. add the message
-         *
          * chat ref globally asscebile
          * **/
 
-
         messageRef = FirebaseDatabase.getInstance().getReference("/messages");
-
-//        final String type1, type2;
-//        type1 = UserDetails.userID + "_" + UserDetails.chatwithID;
-//        type2 = UserDetails.chatwithID + "_" + UserDetails.userID;
-
-//        messageRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                DataSnapshot child1 = dataSnapshot.child(type1);
-//                DataSnapshot child2 = dataSnapshot.child(type2);
-//                if (child1.exists()) {
-//                    UserDetails.userType = "type1";
-//                    //chatRef2 = messageRef.child(type1);
-//                } else if (child2.exists()) {
-//                    UserDetails.userType = "type2";
-//                } else {
-//                    UserDetails.userType = "type1";
-//                    //chatRef2 = messageRef.child(type2);
-//                    dataSnapshot.child(type1);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        if (UserDetails.userType.equals("type1")) {
-//            //type 1 child already exists :)
-//            chatRef = messageRef.child(type1);
-//        } else {
-//            //type 2 child already exixts :)
-//            chatRef = messageRef.child(type2);
-//        }
-
-
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +114,9 @@ public class Chat extends AppCompatActivity {
 
                 }
             });
+        }else{
+            startActivity(new Intent(Chat.this,Chat.class));
+
         }
     }
 
@@ -175,7 +141,13 @@ public class Chat extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Utils.intentWithClear(Chat.this, Users.class);
+        onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Utils.intentWithClear(Chat.this,Users.class);
     }
 }

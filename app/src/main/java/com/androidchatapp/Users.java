@@ -46,9 +46,7 @@ public class Users extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
                     pd.dismiss();
-                    Intent intent = new Intent(Users.this, Login.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);                    // User is signed out
+                    Utils.intentWithClear(Users.this, Login.class);
                 } else {
                     UserDetails.userID = user.getUid();
                     UserDetails.userEmail = user.getEmail();
@@ -92,24 +90,7 @@ public class Users extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String checkChild = al.get(position);
                 UserDetails.chatwithEmail = checkChild;
-                Utils.valueEventListener(userRef,checkChild);
-//                userRef.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                            //Log.w("checkcheck", child.getKey());
-//                            if (child.getValue().equals(checkChild)) {
-//                                UserDetails.chatwithID = child.getKey();
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-                //UserDetails.chatwithID = al.get(position);
+                Utils.valueEventListener(userRef, checkChild);
                 startActivity(new Intent(Users.this, Chat.class));
             }
         });

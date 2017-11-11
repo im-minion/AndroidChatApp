@@ -57,9 +57,7 @@ public class Login extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 pd.dismiss();
-                                Intent intent = new Intent(Login.this, Users.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
+                                Utils.intentWithClear(Login.this, Users.class);
                             } else {
                                 pd.dismiss();
                                 Toast.makeText(Login.this, "FAILED" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -42,9 +42,7 @@ public class Register extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Register.this, Login.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                Utils.intentWithClear(Register.this, Login.class);
             }
         });
 
@@ -68,9 +66,7 @@ public class Register extends AppCompatActivity {
                                 FirebaseUser tempUser = FirebaseAuth.getInstance().getCurrentUser();
                                 if (tempUser != null) {
                                     userRef.child(tempUser.getUid()).setValue(tempUser.getEmail());
-                                    Intent intent = new Intent(Register.this, Login.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
+                                    Utils.intentWithClear(Register.this, Login.class);
                                 }
                             }
                         }
@@ -83,8 +79,6 @@ public class Register extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(Register.this, Login.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
+        Utils.intentWithClear(Register.this, Login.class);
     }
 }

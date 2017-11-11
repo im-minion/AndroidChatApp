@@ -5,24 +5,29 @@
     android:gravity="bottom"
     android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/messageArea"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_weight="7"
-        android:hint="@string/message"
-        android:padding="12dp"
-        android:textColor="@android:color/black" />
+        android:layout_marginBottom="3dp"
+        android:baselineAligned="true">
 
-    <ImageView
-        android:id="@+id/sendButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:layout_weight="1.5"
-        android:background="@android:color/holo_red_light"
-        android:padding="4dp"
-        android:src="@android:drawable/ic_menu_send" />
+        <EditText
+            android:id="@+id/messageArea"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="7"
+            android:hint="@string/message"
+            android:padding="12dp"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/sendButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1.5"
+            android:padding="4dp"
+            android:src="@drawable/ic_send_mail" />
+    </LinearLayout>
 </LinearLayout>

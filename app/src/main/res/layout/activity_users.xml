@@ -24,8 +24,11 @@
 
     <Button
         android:id="@+id/sign_out"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/signout" />
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/signout"
+        android:textColor="@android:color/white" />
 </LinearLayout>

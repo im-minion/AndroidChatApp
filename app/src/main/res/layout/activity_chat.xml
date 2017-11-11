@@ -20,6 +20,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="5dp"
         android:layout_weight="20">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -17,12 +17,13 @@
         android:layout_width="185dp"
         android:layout_height="166dp"
         android:gravity="center"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/ic_speech_bubble_large" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="@string/login"
         android:textSize="30sp"
@@ -51,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@android:color/holo_red_light"
+        android:background="@color/colorPrimary"
         android:text="@string/login"
         android:textColor="@android:color/white" />
 

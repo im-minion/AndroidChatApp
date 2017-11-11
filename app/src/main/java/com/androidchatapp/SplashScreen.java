@@ -8,11 +8,9 @@ import android.view.Window;
 
 import gr.net.maroulis.library.EasySplashScreen;
 
-import static com.androidchatapp.R.drawable.splash_logo;
-
+import static com.androidchatapp.R.drawable.ic_speech_bubble_large;
 
 public class SplashScreen extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +22,17 @@ public class SplashScreen extends AppCompatActivity {
         config.withFullScreen();
         config.withTargetActivity(Users.class);
         config.withSplashTimeOut(1000);
-        config.withBackgroundColor(Color.parseColor("#f43d3c"));
-        config.withLogo(splash_logo);
-        config.withHeaderText("");
-        config.withFooterText("");
-        config.withBeforeLogoText("");
-        config.withAfterLogoText("Chatly");
+        config.withBackgroundColor(Color.parseColor("#ffffff"));
+        config.withLogo(ic_speech_bubble_large);
+
+
+        config.withAfterLogoText("Chat :)");
 
         //text
-        config.getHeaderTextView().setTextColor(Color.CYAN);
-        config.getFooterTextView().setTextColor(Color.CYAN);
-        config.getAfterLogoTextView().setTextColor(Color.CYAN);
-        config.getBeforeLogoTextView().setTextColor(Color.CYAN);
 
+        config.getAfterLogoTextView().setTextColor(getResources().getColor(R.color.colorPrimary));
+        config.getAfterLogoTextView().setTextSize(24);
+        config.getLogo().setPadding(0, 0, 0, 10);
         //now for view
         View view = config.create();
 

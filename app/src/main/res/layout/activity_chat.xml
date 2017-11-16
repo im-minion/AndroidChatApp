@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
-        app:titleMarginStart="40dp"
         app:titleTextColor="@android:color/white" />
 
     <ScrollView

@@ -98,6 +98,11 @@ public class Users extends AppCompatActivity {
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserDetails.chatwithEmail = "";
+                UserDetails.userType = "";
+                UserDetails.userEmail = "";
+                UserDetails.chatwithID = "";
+                UserDetails.userID = "";
                 FirebaseAuth.getInstance().signOut();
             }
         });

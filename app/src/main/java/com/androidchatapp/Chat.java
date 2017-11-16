@@ -88,9 +88,9 @@ public class Chat extends AppCompatActivity {
                     String message = String.valueOf(dataSnapshot.child("message").getValue());
                     String userName = String.valueOf(dataSnapshot.child("user").getValue());
                     if (userName.equals(UserDetails.userID)) {
-                        addMessageBox("You:-\n" + message, 1);
+                        addMessageBox("You:\n" + message, 1);
                     } else {
-                        addMessageBox(UserDetails.chatwithEmail + ":-\n" + message, 2);
+                        addMessageBox(UserDetails.chatwithEmail + ":\n" + message, 2);
                     }
                 }
 
@@ -114,8 +114,8 @@ public class Chat extends AppCompatActivity {
 
                 }
             });
-        }else{
-            startActivity(new Intent(Chat.this,Chat.class));
+        } else {
+            startActivity(new Intent(Chat.this, Chat.class));
 
         }
     }
@@ -130,9 +130,13 @@ public class Chat extends AppCompatActivity {
         if (type == 1) {
             lp2.gravity = Gravity.END;
             textView.setBackgroundResource(R.drawable.bubble_in);
+            textView.getBackground().setAlpha(150);
+            textView.setTextSize(18);
         } else {
             lp2.gravity = Gravity.START;
             textView.setBackgroundResource(R.drawable.bubble_out);
+            textView.getBackground().setAlpha(150);
+            textView.setTextSize(18);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);
@@ -148,6 +152,6 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Utils.intentWithClear(Chat.this,Users.class);
+        Utils.intentWithClear(Chat.this, Users.class);
     }
 }

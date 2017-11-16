@@ -103,6 +103,7 @@ public class Users extends AppCompatActivity {
                 UserDetails.userEmail = "";
                 UserDetails.chatwithID = "";
                 UserDetails.userID = "";
+                UserDetails.chatRef = null;
                 FirebaseAuth.getInstance().signOut();
             }
         });

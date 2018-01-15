@@ -1,8 +1,6 @@
 package com.androidchatapp;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,19 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,15 +26,13 @@ import java.util.Objects;
 
 
 public class Chat extends AppCompatActivity {
-    LinearLayout layout;
-    RelativeLayout layout_2;
+
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
     DatabaseReference messageRef;
     boolean type = false;
     RecyclerView chatRecView;
-
     Toolbar toolbar;
 
     @Override
@@ -49,8 +40,6 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        //layout = (LinearLayout) findViewById(R.id.layout1);
-        //layout_2 = (RelativeLayout) findViewById(R.id.layout2);
         sendButton = (ImageView) findViewById(R.id.sendButton);
         messageArea = (EditText) findViewById(R.id.messageArea);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -63,19 +52,9 @@ public class Chat extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         chatRecView.setHasFixedSize(true);
         chatRecView.setLayoutManager(layoutManager);
-        /**
-         * 1. create messageRef to get till the message child
-         * 2. from messageRef get chatRef as follows
-         * >>>>>>if message ref contains child of type 1 then store chatref as the value of child type1
-         * >>>>>>else if message ref contains child of type 2 then store chatref as the value of child type2
-         * >>>>>>else set the chatRef to null
-         * 3. send button on click listener take chatRef and inside it into push child setvalue of "map" defined below
-         * 4. add the message
-         * chat ref globally asscebile
-         * */
 
         messageRef = FirebaseDatabase.getInstance().getReference("/messages");
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -92,50 +71,12 @@ public class Chat extends AppCompatActivity {
                 }
             }
         });
-        ///herer get the dayta frofm gteh  firebase
-        /***
-         *
-
-         if (UserDetails.chatRef != null) {
-         UserDetails.chatRef.addChildEventListener(new ChildEventListener() {
-        @Override public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-        String message = String.valueOf(dataSnapshot.child("message").getValue());
-        String userName = String.valueOf(dataSnapshot.child("user").getValue());
-        if (userName.equals(UserDetails.userID)) {
-        addMessageBox("You:\n" + message, 1);
-        } else {
-        addMessageBox(UserDetails.chatwithEmail + ":\n" + message, 2);
-        }
-        }
-
-        @Override public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override public void onCancelled(DatabaseError databaseError) {
-
-        }
-        });
-         } else {
-         startActivity(new Intent(Chat.this, Chat.class));
-
-         }
-         */
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        //int count = 0;
         if (UserDetails.chatRef != null) {
             FirebaseRecyclerAdapter<ChatModel, ChatViewHolder> firebaseRecyclerAdapter =
                     new FirebaseRecyclerAdapter<ChatModel, ChatViewHolder>(
@@ -146,17 +87,20 @@ public class Chat extends AppCompatActivity {
                         @Override
                         protected void populateViewHolder(ChatViewHolder viewHolder, ChatModel model, int position) {
                             final String chatKey = getRef(position).getKey();
-
                             viewHolder.setChatMessage(model.getMessage());
-                            // Log.w("mytag "+model.getUser(), model.getMessage());
                             type = Objects.equals(model.getUser(), UserDetails.userID);
-                            viewHolder.setUserText(model.getUser(),type);
+                            viewHolder.setUserText(model.getUser(), type);
 
                         }
                     };
             chatRecView.setAdapter(firebaseRecyclerAdapter);
         } else {
-            startActivity(new Intent(Chat.this, Chat.class));
+            //count = count + 1;
+            Utils.intentWithClear(Chat.this, Chat.class);
+            finish();
+            //Toast.makeText(getApplicationContext(),"hppnd",Toast.LENGTH_SHORT).show();
+            //Log.d("mytag", "happend " + count);
+            //10 times it happens for the first time
         }
     }
 
@@ -180,42 +124,17 @@ public class Chat extends AppCompatActivity {
 
         public void setUserText(String userName, boolean type) {
             userText.setText(userName);
-            if (type){
-                //current
-                //Log.d("myTT " +userName,""+type);
+            if (type) {
+                //current logged in user
                 linearLayout.setBackgroundResource(R.drawable.bubble_in);
                 linearLayout.setGravity(Gravity.END);
 
-            }else {
+            } else {
                 linearLayout.setBackgroundResource(R.drawable.bubble_out);
                 linearLayout.setGravity(Gravity.START);
             }
         }
     }
-
-
-//    public void addMessageBox(String message, int type) {
-//        TextView textView = new TextView(Chat.this);
-//        textView.setText(message);
-//
-//        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        lp2.weight = 1.0f;
-//
-//        if (type == 1) {
-//            lp2.gravity = Gravity.END;
-//            textView.setBackgroundResource(R.drawable.bubble_in);
-//            textView.getBackground().setAlpha(150);
-//            textView.setTextSize(18);
-//        } else {
-//            lp2.gravity = Gravity.START;
-//            textView.setBackgroundResource(R.drawable.bubble_out);
-//            textView.getBackground().setAlpha(150);
-//            textView.setTextSize(18);
-//        }
-//        textView.setLayoutParams(lp2);
-//        layout.addView(textView);
-//        scrollView.fullScroll(View.FOCUS_DOWN);
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {

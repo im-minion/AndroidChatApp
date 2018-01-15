@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,31 +15,39 @@
         android:background="@color/colorAccent"
         app:titleTextColor="@android:color/white" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <!--<ScrollView-->
+    <!--android:id="@+id/scrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_margin="5dp"-->
+    <!--android:layout_weight="20">-->
+
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/layout2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/layout1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical" />-->
+    <!--</RelativeLayout>-->
+    <!--</ScrollView>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:layout_weight="20">
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/layout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/layout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </RelativeLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:layout_above="@id/msg_bar"
+        android:layout_below="@id/chat_with_toolbar" />
 
     <include
+        android:id="@+id/msg_bar"
         layout="@layout/message_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="5dp"
         android:gravity="bottom" />
 
-</LinearLayout>
+</RelativeLayout>

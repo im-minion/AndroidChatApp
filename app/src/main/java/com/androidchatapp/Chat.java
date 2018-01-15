@@ -92,44 +92,6 @@ public class Chat extends AppCompatActivity {
                 }
             }
         });
-        ///herer get the dayta frofm gteh  firebase
-        /***
-         *
-
-         if (UserDetails.chatRef != null) {
-         UserDetails.chatRef.addChildEventListener(new ChildEventListener() {
-        @Override public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-        String message = String.valueOf(dataSnapshot.child("message").getValue());
-        String userName = String.valueOf(dataSnapshot.child("user").getValue());
-        if (userName.equals(UserDetails.userID)) {
-        addMessageBox("You:\n" + message, 1);
-        } else {
-        addMessageBox(UserDetails.chatwithEmail + ":\n" + message, 2);
-        }
-        }
-
-        @Override public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override public void onCancelled(DatabaseError databaseError) {
-
-        }
-        });
-         } else {
-         startActivity(new Intent(Chat.this, Chat.class));
-
-         }
-         */
     }
 
     @Override
@@ -146,9 +108,7 @@ public class Chat extends AppCompatActivity {
                         @Override
                         protected void populateViewHolder(ChatViewHolder viewHolder, ChatModel model, int position) {
                             final String chatKey = getRef(position).getKey();
-
                             viewHolder.setChatMessage(model.getMessage());
-                            // Log.w("mytag "+model.getUser(), model.getMessage());
                             type = Objects.equals(model.getUser(), UserDetails.userID);
                             viewHolder.setUserText(model.getUser(),type);
 
@@ -181,8 +141,7 @@ public class Chat extends AppCompatActivity {
         public void setUserText(String userName, boolean type) {
             userText.setText(userName);
             if (type){
-                //current
-                //Log.d("myTT " +userName,""+type);
+                //current logged in user
                 linearLayout.setBackgroundResource(R.drawable.bubble_in);
                 linearLayout.setGravity(Gravity.END);
 
@@ -192,30 +151,6 @@ public class Chat extends AppCompatActivity {
             }
         }
     }
-
-
-//    public void addMessageBox(String message, int type) {
-//        TextView textView = new TextView(Chat.this);
-//        textView.setText(message);
-//
-//        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        lp2.weight = 1.0f;
-//
-//        if (type == 1) {
-//            lp2.gravity = Gravity.END;
-//            textView.setBackgroundResource(R.drawable.bubble_in);
-//            textView.getBackground().setAlpha(150);
-//            textView.setTextSize(18);
-//        } else {
-//            lp2.gravity = Gravity.START;
-//            textView.setBackgroundResource(R.drawable.bubble_out);
-//            textView.getBackground().setAlpha(150);
-//            textView.setTextSize(18);
-//        }
-//        textView.setLayoutParams(lp2);
-//        layout.addView(textView);
-//        scrollView.fullScroll(View.FOCUS_DOWN);
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {

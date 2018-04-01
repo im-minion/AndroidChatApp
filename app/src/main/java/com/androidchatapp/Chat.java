@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -108,16 +107,20 @@ public class Chat extends AppCompatActivity {
 
 
         public void setUserText(String userName, boolean type) {
-            userText.setText(userName);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.FILL_PARENT);
             if (type) {
                 //current logged in user
-                linearLayout.setBackgroundResource(R.drawable.bubble_in);
+                params.gravity = Gravity.END;
+                userText.setText("You");
                 linearLayout.setGravity(Gravity.END);
-
+                linearLayout.setBackgroundResource(R.drawable.bubble_in);
             } else {
-                linearLayout.setBackgroundResource(R.drawable.bubble_out);
+                params.gravity = Gravity.START;
+                userText.setText(UserDetails.chatwithEmail);
                 linearLayout.setGravity(Gravity.START);
+                linearLayout.setBackgroundResource(R.drawable.bubble_out);
             }
+            linearLayout.setLayoutParams(params);
         }
     }
 
@@ -140,10 +143,8 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    //Log.w("checkcheck", child.getKey());
                     if (Objects.equals(child.getValue(), checkChild)) {
                         UserDetails.chatwithID = child.getKey();
-                        //UserDetails.setChatwithID(child.getKey());
                         final String type1, type2;
                         type1 = UserDetails.userID + "_" + UserDetails.chatwithID;
                         type2 = UserDetails.chatwithID + "_" + UserDetails.userID;
@@ -176,7 +177,7 @@ public class Chat extends AppCompatActivity {
                                                     UserDetails.chatRef) {
                                                 @Override
                                                 protected void populateViewHolder(ChatViewHolder viewHolder, ChatModel model, int position) {
-                                                    final String chatKey = getRef(position).getKey();
+//                                                    final String chatKey = getRef(position).getKey();
                                                     viewHolder.setChatMessage(model.getMessage());
                                                     type = Objects.equals(model.getUser(), UserDetails.userID);
                                                     viewHolder.setUserText(model.getUser(), type);
@@ -185,13 +186,9 @@ public class Chat extends AppCompatActivity {
                                             };
                                     chatRecView.setAdapter(firebaseRecyclerAdapter);
                                 } else {
-                                    //count = count + 1;
-                                    Toast.makeText(getApplicationContext(), "tatti", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                                     Utils.intentWithClear(Chat.this, Chat.class);
                                     finish();
-                                    //Toast.makeText(getApplicationContext(),"hppnd",Toast.LENGTH_SHORT).show();
-                                    //Log.d("mytag", "happend " + count);
-                                    //10 times it happens for the first time
                                 }
                             }
 

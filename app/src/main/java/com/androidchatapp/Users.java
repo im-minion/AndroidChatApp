@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Users extends AppCompatActivity {
     ListView usersList;
@@ -28,7 +29,6 @@ public class Users extends AppCompatActivity {
     ArrayList<String> al;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference userRef;
     ProgressDialog pd;
 
     @Override
@@ -54,7 +54,7 @@ public class Users extends AppCompatActivity {
             }
         };
 
-        userRef = FirebaseDatabase.getInstance().getReference("/users");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("/users");
         usersList = (ListView) findViewById(R.id.usersList);
         noUsersText = (TextView) findViewById(R.id.noUsersText);
         userRef.addValueEventListener(new ValueEventListener() {
@@ -64,7 +64,7 @@ public class Users extends AppCompatActivity {
                 al = new ArrayList<>();
 //                Iterable<DataSnapshot> imagesDir = dataSnapshot.getChildren();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    if (!child.getValue().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                    if (!Objects.equals(child.getValue(), FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                         al.add(String.valueOf(child.getValue()));
 
                     }

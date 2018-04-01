@@ -90,8 +90,10 @@ public class Users extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String checkChild = al.get(position);
                 UserDetails.chatwithEmail = checkChild;
-                Utils.valueEventListener(userRef, checkChild);
-                startActivity(new Intent(Users.this, Chat.class));
+                Intent intent = new Intent(Users.this, Chat.class);
+                intent.putExtra("chatwithEmail", checkChild);
+                startActivity(intent);
+//                startActivity(new Intent(Users.this, Chat.class));
             }
         });
 

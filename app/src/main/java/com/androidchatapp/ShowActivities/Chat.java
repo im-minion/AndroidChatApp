@@ -1,4 +1,4 @@
-package com.androidchatapp;
+package com.androidchatapp.ShowActivities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidchatapp.Model.ChatModel;
+import com.androidchatapp.R;
+import com.androidchatapp.UtilitiesClasses.UserDetails;
+import com.androidchatapp.UtilitiesClasses.Utils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

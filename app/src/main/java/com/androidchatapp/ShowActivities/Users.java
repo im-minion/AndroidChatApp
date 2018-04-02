@@ -1,4 +1,4 @@
-package com.androidchatapp;
+package com.androidchatapp.ShowActivities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidchatapp.R;
+import com.androidchatapp.UtilitiesClasses.UserDetails;
+import com.androidchatapp.UtilitiesClasses.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

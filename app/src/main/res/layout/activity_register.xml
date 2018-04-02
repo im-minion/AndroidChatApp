@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="1"
-    tools:context="com.androidchatapp.Register">
+    tools:context="com.androidchatapp.ShowActivities.Register">
 
     <ImageView
         android:id="@+id/imageView"

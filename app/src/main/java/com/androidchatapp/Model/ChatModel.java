@@ -1,10 +1,10 @@
-package com.androidchatapp;
+package com.androidchatapp.Model;
 
 /**
  * Created by vaibhav on 1/15/18.
  */
 
-class ChatModel {
+public class ChatModel {
     public ChatModel(String message, String user) {
         this.message = message;
         this.user = user;

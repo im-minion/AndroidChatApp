@@ -1,4 +1,4 @@
-package com.androidchatapp;
+package com.androidchatapp.UtilitiesClasses;
 
 import android.content.Context;
 import android.content.Intent;

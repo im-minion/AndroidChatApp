@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.androidchatapp.Users">
+    tools:context="com.androidchatapp.ShowActivities.Users">
 
     <TextView
         android:id="@+id/noUsersText"

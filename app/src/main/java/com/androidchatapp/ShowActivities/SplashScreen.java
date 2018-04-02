@@ -1,10 +1,12 @@
-package com.androidchatapp;
+package com.androidchatapp.ShowActivities;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+
+import com.androidchatapp.R;
 
 import gr.net.maroulis.library.EasySplashScreen;
 

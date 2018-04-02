@@ -1,6 +1,5 @@
 package com.androidchatapp;
 
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 
 public class Chat extends AppCompatActivity {
 
@@ -70,11 +67,14 @@ public class Chat extends AppCompatActivity {
                 String messageText = messageArea.getText().toString();
 
                 if (!messageText.equals("")) {
-                    Map<String, String> map = new HashMap<String, String>();
+                    Map<String, String> map = new HashMap<>();
                     map.put("message", messageText);
                     map.put("user", UserDetails.userID);
                     UserDetails.chatRef.push().setValue(map);
-                    messageArea.setText("");
+                    messageArea.
+                            setText("");
+                    messageArea.
+                            setHint("Message");
                 }
             }
         });

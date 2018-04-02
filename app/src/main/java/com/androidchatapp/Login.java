@@ -36,13 +36,6 @@ public class Login extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         Button loginButton = (Button) findViewById(R.id.loginButton);
 
-        registerUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this, Register.class));
-            }
-        });
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +58,12 @@ public class Login extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+        registerUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, Register.class));
             }
         });
     }

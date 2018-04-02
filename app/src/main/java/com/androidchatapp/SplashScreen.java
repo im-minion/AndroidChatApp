@@ -16,28 +16,18 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        EasySplashScreen configurations = new EasySplashScreen(SplashScreen.this);
+        configurations.withFullScreen();
+        configurations.withTargetActivity(Users.class);
+        configurations.withSplashTimeOut(1000);
+        configurations.withBackgroundColor(Color.parseColor("#ffffff"));
+        configurations.withLogo(ic_speech_bubble_large);
+        configurations.withAfterLogoText("Chat :)");
 
-
-        EasySplashScreen config = new EasySplashScreen(SplashScreen.this);
-        config.withFullScreen();
-        config.withTargetActivity(Users.class);
-        config.withSplashTimeOut(1000);
-        config.withBackgroundColor(Color.parseColor("#ffffff"));
-        config.withLogo(ic_speech_bubble_large);
-
-
-        config.withAfterLogoText("Chat :)");
-
-        //text
-
-        config.getAfterLogoTextView().setTextColor(getResources().getColor(R.color.colorPrimary));
-        config.getAfterLogoTextView().setTextSize(24);
-        config.getLogo().setPadding(0, 0, 0, 10);
-        //now for view
-        View view = config.create();
-
-        //set view
-        setContentView(view);
-
+        configurations.getAfterLogoTextView().setTextColor(getResources().getColor(R.color.colorPrimary));
+        configurations.getAfterLogoTextView().setTextSize(24);
+        configurations.getLogo().setPadding(0, 0, 0, 10);
+        View v = configurations.create();
+        setContentView(v);
     }
 }

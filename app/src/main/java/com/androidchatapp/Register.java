@@ -39,20 +39,13 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("/users");
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.intentWithClear(Register.this, Login.class);
-            }
-        });
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user = username.getText().toString();
                 pass = password.getText().toString();
                 if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass)) {
-                    pd.setMessage("Adding.....");
+                    pd.setMessage("Loading..");
                     pd.show();
                     mAuth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -72,6 +65,12 @@ public class Register extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.intentWithClear(Register.this, Login.class);
             }
         });
     }
